@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="750"
       Title="AutorizationPage" Background="#D9D9D9">
@@ -58,15 +57,11 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">
-           
+
                 <Button x:Name="btnlog" Margin="5" BorderBrush="{x:Null}" Content="Войти" Click="btnlog_Click" Width="200"/>
-                
+
             </StackPanel>
             <TextBox x:Name="resultTextBox" Background="#00808080" ></TextBox>
         </StackPanel>
-  
-       
-           
-        
     </Grid>
 </Page>
