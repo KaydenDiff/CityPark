@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Newtonsoft.Json;
+
 using System.Windows.Shapes;
 
 namespace PARK.Pages
@@ -36,7 +37,11 @@ namespace PARK.Pages
         {
             string login = polelogin.Text;
             string password = polepassword.Password;
-
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Пожалуйста, заполните все поля.");
+                return;
+            }
             // Создаем объект для хранения данных аутентификации
             var credentials = new { login = login, password = password };
 
@@ -53,13 +58,24 @@ namespace PARK.Pages
                     response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
 
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    // Здесь можно обработать полученные данные из API, например, вывести их в TextBox или ListView
-                    // Например:
-                    resultTextBox.Text = responseBody;
+
+                    // Парсим ответ в объект
+                    var responseObject = JsonConvert.DeserializeObject<dynamic>(responseBody);
+                    string token = responseObject.token;
+
+                    // Сохраняем токен в настройках приложения
+                    Token.token = token;
+                    Properties.Settings.Default.Token = token;
+                    Properties.Settings.Default.Save();
+
+                    // Переход на другую страницу или какая-то другая логика после успешной аутентификации
+                    FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
                 }
-                catch (HttpRequestException ex)
+               
+                catch (Exception)
                 {
-                    MessageBox.Show($"Ошибка при запросе к API: {ex.Message}");
+                    // Ошибка при неправильно введенных данных
+                    MessageBox.Show("Проверьте правильность введенных данных");
                 }
             }
         }
