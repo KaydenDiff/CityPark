@@ -115,17 +115,17 @@ namespace PARK.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            FrameManager.MainFrame.Navigate(new ProfitPage(mainWindow));
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            FrameManager.MainFrame.Navigate(new PopularTarifPage(mainWindow));
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
+            FrameManager.MainFrame.Navigate(new OrdersListPage(mainWindow));
         }
 
         private void btnback_Click(object sender, RoutedEventArgs e)
