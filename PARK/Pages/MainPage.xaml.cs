@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -83,11 +84,33 @@ namespace PARK.Pages
             // Присваиваем полученное ФИО свойству Text элемента TextBlock
             FN.Text = fullName; 
             Role.Text = RoleName;
+            if (Role.Text == "Администратор")
+            {
+                // Показываем кнопки для администратора
+                order.Visibility = Visibility.Visible;
+                tarif.Visibility = Visibility.Visible;
+                orders.Visibility = Visibility.Visible;
+                profit.Visibility = Visibility.Visible; // Тут просто для примера, может быть нужно скрыть кнопку для менеджера
+            }
+            else if (Role.Text == "Менеджер")
+            {
+                // Показываем кнопки для менеджера
+                order.Visibility = Visibility.Visible;
+              
+            }
+            else
+            {
+                // Если роль не определена или неизвестна, скрываем все кнопки
+                order.Visibility = Visibility.Collapsed;
+                tarif.Visibility = Visibility.Collapsed;
+                orders.Visibility = Visibility.Collapsed;
+                profit.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            FrameManager.MainFrame.Navigate(new OrderListPage(mainWindow));
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -103,6 +126,11 @@ namespace PARK.Pages
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnback_Click(object sender, RoutedEventArgs e)
+        {
+            FrameManager.MainFrame.GoBack();
         }
     }
 }

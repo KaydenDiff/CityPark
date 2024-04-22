@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PARK.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="400" d:DesignWidth="750"
       Title="MainPage"  Background="#D9D9D9">
     <Page.Resources>
     <Style TargetType="Button">
@@ -32,25 +32,37 @@
         </Style.Resources>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FF244FA4"/>
+                <Setter Property="Background" Value="#FF2D7D80"/>
             </Trigger>
         </Style.Triggers>
 
     </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" >Здраствуйте</TextBlock>
-            <TextBlock x:Name="FN" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
-            <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Top" > ваша роль </TextBlock>
-            <TextBlock x:Name="Role" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" >
+            <Button  Margin="0,5,5,0" x:Name="btnback" BorderBrush="{x:Null}" Click="btnback_Click" Background="#00808080" >
+                <Image x:Name="profImage" Source="/img/back.png" Width="38" />
+            </Button>
+          
         </StackPanel>
-        <StackPanel Margin="0,116,0,0">
+       
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0" >
+                <TextBlock Padding="0 0 3 5">Здраствуйте</TextBlock>
+                <TextBlock x:Name="FN" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Padding="0 0 5 5" HorizontalAlignment="Center" VerticalAlignment="Top" > ваша роль</TextBlock>
+                <TextBlock x:Name="Role" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
+            </StackPanel>
+         
+        </StackPanel>
+        <StackPanel Margin="0,100,0,0">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" >Предоставленные возможности</TextBlock>
-            <Button Width="170" Margin="0 30 0 0"  FontSize="12" Content="Просмотр заказов" Click="Button_Click"></Button>
-            <Button Width="170" Margin="0 30 0 0"  FontSize="12" Content="Просмотр дохода" Click="Button_Click_1"></Button>
-            <Button Width="170" Margin="0 30 0 0" FontSize="12" Content="Самый популярный тариф" Click="Button_Click_2"></Button>
-            <Button Width="170" Margin="0 30 0 0" FontSize="12" Content="Список сотрудников" Click="Button_Click_3"></Button>
+            <Button x:Name="order" Width="170" Margin="0 20 0 0"  FontSize="12" Content="Просмотр заказов" Click="Button_Click" Visibility="Collapsed"></Button>
+            <Button x:Name="profit" Width="170" Margin="0 20 0 0"  FontSize="12" Content="Просмотр дохода" Click="Button_Click_1" Visibility="Collapsed"></Button>
+            <Button x:Name="tarif" Width="170" Margin="0 20 0 0" FontSize="12" Content="Самый популярный тариф" Click="Button_Click_2" Visibility="Collapsed"></Button>
+            <Button x:Name="orders" Width="170" Margin="0 20 0 0" FontSize="12" Content="Список сотрудников" Click="Button_Click_3" Visibility="Collapsed"></Button>
         </StackPanel>
     </Grid>
 </Page>

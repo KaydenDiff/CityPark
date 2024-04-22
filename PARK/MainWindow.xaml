@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PARK"
         mc:Ignorable="d"
-        Title="Атракцион" Height="400" Width="750" MaxHeight="400" MaxWidth="750" WindowStartupLocation ="CenterScreen">
+        Title="Атракцион" Height="400" Width="750"  WindowStartupLocation ="CenterScreen">
     <Grid>
         <Frame Name="Mainframe" NavigationUIVisibility="Hidden" />
     </Grid>
