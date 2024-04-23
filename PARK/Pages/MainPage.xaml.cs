@@ -80,10 +80,11 @@ namespace PARK.Pages
         private async void LoadFullName()
         {
             string fullName = await GetFullNameFromAPI(Token.token);
-            string RoleName = await GetRoleFromAPI(Token.token);
-            // Присваиваем полученное ФИО свойству Text элемента TextBlock
-            FN.Text = fullName; 
-            Role.Text = RoleName;
+            string roleName = await GetRoleFromAPI(Token.token);
+
+            // Присваиваем полученное ФИО и роль свойству Text элементов TextBlock
+            FN.Text = fullName;
+            Role.Text = roleName;
             if (Role.Text == "Администратор")
             {
                 // Показываем кнопки для администратора
@@ -125,7 +126,7 @@ namespace PARK.Pages
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            FrameManager.MainFrame.Navigate(new OrdersListPage(mainWindow));
+            FrameManager.MainFrame.Navigate(new EmployeeListPage(mainWindow));
         }
 
         private void btnback_Click(object sender, RoutedEventArgs e)

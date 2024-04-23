@@ -67,7 +67,7 @@ namespace PARK.Pages
                     Token.token = token;
                     Properties.Settings.Default.Token = token;
                     Properties.Settings.Default.Save();
-
+                   
                     // Переход на другую страницу или какая-то другая логика после успешной аутентификации
                     FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
                 }

@@ -16,23 +16,25 @@ using System.Windows.Shapes;
 namespace PARK.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для OrdersListPage.xaml
+    /// Логика взаимодействия для AddEmployeePage.xaml
     /// </summary>
-    public partial class OrdersListPage : Page
+    public partial class AddEmployeePage : Page
     {
         public MainWindow mainWindow;
-        public OrdersListPage(MainWindow main)
+        public AddEmployeePage( MainWindow main)
         {
             InitializeComponent();
-             mainWindow = main;
+            mainWindow = main;
         }
-    private void btnback_Click(object sender, RoutedEventArgs e)
-    {
-        FrameManager.MainFrame.GoBack();
-    }
-    private void Button_Click(object sender, RoutedEventArgs e)
-        {
 
+        private void btnback_Click(object sender, RoutedEventArgs e)
+        {
+            FrameManager.MainFrame.GoBack();
+        }
+
+        private void AddEmployeeButton_click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Сотрудник создан успешно!");
         }
     }
 }
