@@ -42,7 +42,7 @@ namespace PARK.Pages
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("http://api-all.ru/api/full");
+                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/full");
                     response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
 
                     fullName = await response.Content.ReadAsStringAsync();
@@ -64,7 +64,7 @@ namespace PARK.Pages
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("http://api-all.ru/api/getRole");
+                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/getRole");
                     response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
 
                     RoleName = await response.Content.ReadAsStringAsync();
@@ -85,7 +85,7 @@ namespace PARK.Pages
             // Присваиваем полученное ФИО и роль свойству Text элементов TextBlock
             FN.Text = fullName;
             Role.Text = roleName;
-            if (Role.Text == "Администратор")
+            if (Role.Text == "admin")
             {
                 // Показываем кнопки для администратора
                 order.Visibility = Visibility.Visible;
@@ -93,7 +93,7 @@ namespace PARK.Pages
                 orders.Visibility = Visibility.Visible;
                 profit.Visibility = Visibility.Visible; // Тут просто для примера, может быть нужно скрыть кнопку для менеджера
             }
-            else if (Role.Text == "Менеджер")
+            else if (Role.Text == "manager")
             {
                 // Показываем кнопки для менеджера
                 order.Visibility = Visibility.Visible;

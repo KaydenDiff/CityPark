@@ -89,6 +89,7 @@
       <DependentUpon>ProfitPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="RoleList.cs" />
+    <Compile Include="Tarif.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="UsersList.cs" />
     <Page Include="MainWindow.xaml">

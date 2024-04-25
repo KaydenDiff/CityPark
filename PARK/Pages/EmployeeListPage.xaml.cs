@@ -42,16 +42,15 @@ namespace PARK.Pages
                 try
                 {
                     // Запрос на получение списка пользователей
-                    HttpResponseMessage response = await client.GetAsync("http://api-all.ru/api/users");
-                    response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
-
+                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/users");
+                    response.EnsureSuccessStatusCode();
                     if (response.IsSuccessStatusCode)
                     {
                         string usersJson = await response.Content.ReadAsStringAsync();
-                        List<UsersList> userData = JsonConvert.DeserializeObject<List<UsersList>>(usersJson);
+                        List<UsersList> users = JsonConvert.DeserializeObject<List<UsersList>>(usersJson);
 
                         // Запрос на получение списка ролей
-                        HttpResponseMessage roleResponse = await client.GetAsync("http://api-all.ru/api/roles");
+                        HttpResponseMessage roleResponse = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/roles");
                         roleResponse.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
 
                         string rolesJson = await roleResponse.Content.ReadAsStringAsync();
@@ -61,10 +60,10 @@ namespace PARK.Pages
                         var rolesDictionary = rolesData.ToDictionary(role => role.Id, role => role.Name);
 
                         // Выбор нужных свойств из объектов User и замена идентификаторов ролей на их названия
-                        data = userData.Select(u => new UsersList
+                        data = users.Select(u => new UsersList
                         {
-                            Surname = u.Surname,
-                            Name = u.Name,
+                            FullName = $"{u.Surname} {u.Name} {u.Patronymic}",
+
                             RoleName = rolesDictionary.ContainsKey(u.Role_id) ? rolesDictionary[u.Role_id] : "Unknown"
                         }).ToList();
                     }

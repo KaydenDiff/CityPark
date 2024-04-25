@@ -52,22 +52,19 @@ namespace PARK.Pages
             {
                 try
                 {
-                    HttpResponseMessage response = await client.PostAsync("http://api-all.ru/api/login",
+                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/login",
                         new StringContent(json, Encoding.UTF8, "application/json"));
-
                     response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
-
                     string responseBody = await response.Content.ReadAsStringAsync();
-
                     // Парсим ответ в объект
                     var responseObject = JsonConvert.DeserializeObject<dynamic>(responseBody);
-                    string token = responseObject.token;
+                    string token = responseObject;
 
                     // Сохраняем токен в настройках приложения
                     Token.token = token;
                     Properties.Settings.Default.Token = token;
                     Properties.Settings.Default.Save();
-                   
+                 
                     // Переход на другую страницу или какая-то другая логика после успешной аутентификации
                     FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
                 }

@@ -40,9 +40,11 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel>
-            <TextBlock Margin="0 30 0 0" Foreground="#3AA4A7" FontSize="20" HorizontalAlignment="Center">СПИСОК СОТРУДНИКОВ</TextBlock>
-            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Auto" Name="ListVK" AutoGenerateColumns="False" SelectionMode="Single" Tag="UserBindingSource" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" Grid.Column="0" Margin="0 30 0 60" HorizontalAlignment="Center"  Background="#FF3AA4A7" MinHeight="100" MinWidth="300" >
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Height="88" >
+            <TextBlock Margin="0,30,0,385" Foreground="#3AA4A7" FontSize="20" HorizontalAlignment="Center">СПИСОК СОТРУДНИКОВ</TextBlock>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0 10 0 0">
+            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Auto" Name="ListVK" AutoGenerateColumns="False" SelectionMode="Single" Tag="UserBindingSource" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" Grid.Column="0" Margin="0 30 0 60" HorizontalAlignment="Center"  Background="#FF3AA4A7" MinHeight="100" MinWidth="300" MaxHeight="170"  VerticalAlignment="Center">
                 <DataGrid.Resources>
                     <Style TargetType="DataGrid">
                         <Setter Property="BorderBrush" Value="Black" />
@@ -105,7 +107,7 @@ Background="{TemplateBinding Background}">
                 </DataGrid.Resources>
                 <DataGrid.Columns >
 
-                    <DataGridTextColumn IsReadOnly="True" Header="ФИО Сотрудника" Binding="{Binding Name}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="ФИО Сотрудника" Binding="{Binding FullName}"/>
                     <DataGridTextColumn IsReadOnly="True" Header="Роль сотрудника" Binding="{Binding RoleName}"/>
 
                 </DataGrid.Columns>

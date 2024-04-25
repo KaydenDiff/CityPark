@@ -15,8 +15,10 @@ namespace PARK
             public string Login { get; set; }
             public string Surname { get; set; }
             public string Name { get; set; }
-            public string RoleName { get; set; }
-            public int Role_id { get; set; }
+        public string Patronymic { get; set; }
+        public string RoleName { get; set; }
+        public string FullName { get; set; }
+        public int Role_id { get; set; }
             public DateTime CreatedAt { get; set; }
             public DateTime UpdatedAt { get; set; }
         

@@ -44,7 +44,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                     <TextBlock FontSize="20" Padding="0 10 10 10" Width="173" HorizontalAlignment="Left">Название тарифа:</TextBlock>
-                    <TextBlock FontSize="20" Padding="0 10 0 10">*****</TextBlock>
+                    <TextBlock x:Name="nameTarif" FontSize="20" Padding="0 10 0 10">*****</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontSize="20" Padding="0 0 0 10">Кол-во покупок тарифа за месяц:</TextBlock>

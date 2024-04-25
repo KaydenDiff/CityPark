@@ -34,6 +34,7 @@ namespace PARK.Pages
 
         private void AddEmployeeButton_click(object sender, RoutedEventArgs e)
         {
+
             MessageBox.Show("Сотрудник создан успешно!");
         }
     }
