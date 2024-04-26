@@ -88,7 +88,11 @@
     <Compile Include="Pages\ProfitPage.xaml.cs">
       <DependentUpon>ProfitPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SouvenirsPage.xaml.cs">
+      <DependentUpon>SouvenirsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RoleList.cs" />
+    <Compile Include="Souvenir.cs" />
     <Compile Include="Tarif.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="UsersList.cs" />
@@ -130,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ProfitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SouvenirsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

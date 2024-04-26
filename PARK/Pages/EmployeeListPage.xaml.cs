@@ -64,8 +64,13 @@ namespace PARK.Pages
                         {
                             FullName = $"{u.Surname} {u.Name} {u.Patronymic}",
 
-                            RoleName = rolesDictionary.ContainsKey(u.Role_id) ? rolesDictionary[u.Role_id] : "Unknown"
-                        }).ToList();
+                            RoleName = rolesDictionary.ContainsKey(u.Role_id) ?
+    (rolesDictionary[u.Role_id] == "admin" ? "Администратор" :
+    (rolesDictionary[u.Role_id] == "manager" ? "Менеджер" :
+    (rolesDictionary[u.Role_id] == "editor" ? "Редактор" : 
+    (rolesDictionary[u.Role_id] == "user" ? "Пользователь" : 
+    rolesDictionary[u.Role_id]))) ): "Unknown"
+                    }).ToList();
                     }
                     else
                     {

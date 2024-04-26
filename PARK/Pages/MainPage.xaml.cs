@@ -77,7 +77,29 @@ namespace PARK.Pages
             }
             return RoleName;
         }
-        private async void LoadFullName()
+        private async Task Logout(string accessToken)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/logout");
+                    response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
+
+                    // Обработка успешного выхода из системы
+                    MessageBox.Show("Вы успешно вышли из системы.");
+
+                    // Очистка токена доступа (если необходимо)
+                    accessToken = string.Empty;
+                }
+                catch (HttpRequestException ex)
+                {
+                    MessageBox.Show($"Ошибка при запросе к API: {ex.Message}");
+                }
+            }
+        }
+            private async void LoadFullName()
         {
             string fullName = await GetFullNameFromAPI(Token.token);
             string roleName = await GetRoleFromAPI(Token.token);
@@ -91,13 +113,25 @@ namespace PARK.Pages
                 order.Visibility = Visibility.Visible;
                 tarif.Visibility = Visibility.Visible;
                 orders.Visibility = Visibility.Visible;
-                profit.Visibility = Visibility.Visible; // Тут просто для примера, может быть нужно скрыть кнопку для менеджера
+                profit.Visibility = Visibility.Visible;
+                souvenirs.Visibility = Visibility.Visible;
+                Role.Text = "Администратор";
             }
             else if (Role.Text == "manager")
             {
                 // Показываем кнопки для менеджера
                 order.Visibility = Visibility.Visible;
-              
+                souvenirs.Visibility = Visibility.Visible;
+                Role.Text = "Менеджер";
+
+            }
+            else if (Role.Text == "editor")
+            {
+                // Показываем кнопки для менеджера
+                order.Visibility = Visibility.Visible;
+                souvenirs.Visibility = Visibility.Visible;
+                Role.Text = "Редактор";
+
             }
             else
             {
@@ -106,6 +140,7 @@ namespace PARK.Pages
                 tarif.Visibility = Visibility.Collapsed;
                 orders.Visibility = Visibility.Collapsed;
                 profit.Visibility = Visibility.Collapsed;
+                Role.Text = "Пользователь системы";
             }
         }
 
@@ -129,9 +164,25 @@ namespace PARK.Pages
             FrameManager.MainFrame.Navigate(new EmployeeListPage(mainWindow));
         }
 
-        private void btnback_Click(object sender, RoutedEventArgs e)
+     
+        private async void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            FrameManager.MainFrame.GoBack();
+          
+            try
+            {
+                await Logout(Token.token);
+                // Дополнительные действия после успешного выхода
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при выходе из системы: {ex.Message}");
+            }
+            FrameManager.MainFrame.Navigate(new AutorizationPage(mainWindow));
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            FrameManager.MainFrame.Navigate(new SouvenirsPage(mainWindow));
         }
     }
 }

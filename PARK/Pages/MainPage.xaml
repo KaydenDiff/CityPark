@@ -40,7 +40,7 @@
     </Page.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" >
-            <Button  Margin="0,5,5,0" x:Name="btnback" BorderBrush="{x:Null}" Click="btnback_Click" Background="#00808080" >
+            <Button  Margin="0,5,5,0" x:Name="btnback" BorderBrush="{x:Null}"  Click="LogoutButton_Click" Background="#00808080" >
                 <Image x:Name="profImage" Source="/img/back.png" Width="38" />
             </Button>
           
@@ -63,6 +63,7 @@
             <Button x:Name="profit" Width="170" Margin="0 20 0 0"  FontSize="12" Content="Просмотр дохода" Click="Button_Click_1" Visibility="Collapsed"></Button>
             <Button x:Name="tarif" Width="170" Margin="0 20 0 0" FontSize="12" Content="Самый популярный тариф" Click="Button_Click_2" Visibility="Collapsed"></Button>
             <Button x:Name="orders" Width="170" Margin="0 20 0 0" FontSize="12" Content="Список сотрудников" Click="Button_Click_3" Visibility="Collapsed"></Button>
+            <Button x:Name="souvenirs" Width="170" Margin="0 20 0 0" FontSize="12" Content="Список сувениров" Click="Button_Click_4" Visibility="Collapsed" ></Button>
         </StackPanel>
     </Grid>
 </Page>
