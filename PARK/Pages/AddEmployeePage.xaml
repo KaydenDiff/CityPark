@@ -44,20 +44,20 @@
             <TextBlock Margin="0 30 0 0" Foreground="#3AA4A7" FontSize="20" HorizontalAlignment="Center">СПИСОК СОТРУДНИКОВ</TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel >
-                    <TextBlock Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center">ЛОГИН:</TextBlock>
-                    <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ПАРОЛЬ:</TextBlock>
+                    <TextBlock  Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center">ЛОГИН:</TextBlock>
+                    <TextBlock  Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ПАРОЛЬ:</TextBlock>
                     <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ИМЯ:</TextBlock>
                     <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ФАМИЛИЯ:</TextBlock>
                     <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ОТЧЕСТВО:</TextBlock>
                     <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">РОЛЬ:</TextBlock>
                 </StackPanel>
                 <StackPanel>
-                    <TextBox Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent" BorderBrush="#3AA4A7" Width="138"></TextBox>
-                    <PasswordBox Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent" BorderBrush="#3AA4A7" Width="138"></PasswordBox>
-                    <TextBox Margin="0 15 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
-                    <TextBox Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
-                    <TextBox Margin="0 17 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
-                    <ComboBox Margin="0 15 0 0" x:Name="ComboRole" BorderBrush="#3AA4A7" Width="140"/>
+                    <TextBox x:Name="logintext" Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent" BorderBrush="#3AA4A7" Width="138"></TextBox>
+                    <PasswordBox x:Name="passtext" Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent" BorderBrush="#3AA4A7" Width="138"></PasswordBox>
+                    <TextBox x:Name="nametext" Margin="0 15 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
+                    <TextBox x:Name="surtext" Margin="0 20 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
+                    <TextBox x:Name="pattext" Margin="0 17 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
+                    <ComboBox x:Name="comboBoxRoles" Margin="0 15 0 0" BorderBrush="#3AA4A7" Width="140"/>
                 </StackPanel>
                 
             </StackPanel>

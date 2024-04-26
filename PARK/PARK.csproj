@@ -95,6 +95,7 @@
     <Compile Include="Souvenir.cs" />
     <Compile Include="Tarif.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="UsersList.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
