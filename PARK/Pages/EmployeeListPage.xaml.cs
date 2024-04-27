@@ -60,18 +60,19 @@ namespace PARK.Pages
                         var rolesDictionary = rolesData.ToDictionary(role => role.Id, role => role.Name);
 
                         // Выбор нужных свойств из объектов User и замена идентификаторов ролей на их названия
-                        data = users.Select(u => new UsersList
-                        {
-                            FullName = $"{u.Surname} {u.Name} {u.Patronymic}",
-
-                            RoleName = rolesDictionary.ContainsKey(u.Role_id) ?
-    (rolesDictionary[u.Role_id] == "admin" ? "Администратор" :
-    (rolesDictionary[u.Role_id] == "manager" ? "Менеджер" :
-    (rolesDictionary[u.Role_id] == "editor" ? "Редактор" : 
-    (rolesDictionary[u.Role_id] == "user" ? "Пользователь" : 
-    rolesDictionary[u.Role_id]))) ): "Unknown"
-                    }).ToList();
+                        data = users.Where(u => rolesDictionary.ContainsKey(u.Role_id) && rolesDictionary[u.Role_id] != "user")
+                    .Select(u => new UsersList
+                    {
+                        FullName = $"{u.Surname} {u.Name} {u.Patronymic}",
+                        RoleName = rolesDictionary.ContainsKey(u.Role_id) ?
+(rolesDictionary[u.Role_id] == "admin" ? "Администратор" :
+(rolesDictionary[u.Role_id] == "manager" ? "Менеджер" :
+(rolesDictionary[u.Role_id] == "editor" ? "Редактор" :
+rolesDictionary[u.Role_id]))) : "Unknown"
+                }).ToList();
                     }
+
+
                     else
                     {
                         string responseContent = await response.Content.ReadAsStringAsync();

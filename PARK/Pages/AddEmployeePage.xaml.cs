@@ -61,7 +61,7 @@ namespace PARK.Pages
         private Dictionary<string, int> roleDictionary = new Dictionary<string, int>();
         private async Task FillRoleComboBox(string accessToken)
         {
-       
+
             try
             {
                 string rolesJson = await GetRoleFromAPI(accessToken);
@@ -74,8 +74,12 @@ namespace PARK.Pages
                 // Добавление ролей в ComboBoxRoles и их идентификаторов в словарь
                 foreach (var role in roles)
                 {
-                    comboBoxRoles.Items.Add(role.Name);
-                    roleDictionary.Add(role.Name, role.Id); // Сохранение идентификатора роли в словаре
+                    if (role.Name != "user")
+                    {
+                        comboBoxRoles.Items.Add(role.Name);
+                        roleDictionary.Add(role.Name, role.Id); // Сохранение идентификатора роли в словаре
+                    }
+                        
                 }
             }
             catch (Exception ex)
@@ -107,8 +111,7 @@ namespace PARK.Pages
         private async Task RegisterUser()
         {
             if (string.IsNullOrEmpty(logintext.Text) || string.IsNullOrEmpty(passtext.Password) ||
-string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text))
-
+string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text )|| comboBoxRoles.SelectedItem == null)
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.");
                 return;
@@ -139,18 +142,17 @@ string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text))
                     // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Пользователь успешно зарегистрирован!");
+                        MessageBox.Show("Сотрудник успешно добавлен!");
                     }
                     else
                     {
                         string errorMessage = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show($"Ошибка при регистрации пользователя: {errorMessage}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при регистрации пользователя: {ex.Message}");
+                MessageBox.Show($"Ошибка при регистрации сотрудника: {ex.Message}");
             }
             FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
         }
