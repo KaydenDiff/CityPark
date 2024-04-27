@@ -44,7 +44,7 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="nameTarif" FontSize="16" Width="796" VerticalAlignment="Center" HorizontalAlignment="Center">
-                       *****</TextBlock>
+                       </TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                 </StackPanel>
