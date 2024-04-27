@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.Data;
+using System.Security.Policy;
+using System.Xml.Linq;
 
 namespace PARK.Pages
 {
@@ -30,6 +32,7 @@ namespace PARK.Pages
             InitializeComponent();
             mainWindow = main;
             LoadData();
+
         }
 
         private void btnback_Click(object sender, RoutedEventArgs e)
@@ -37,10 +40,10 @@ namespace PARK.Pages
             FrameManager.MainFrame.GoBack();
         }
 
-        private void AddEmployeeButton_click(object sender, RoutedEventArgs e)
-        {
-            RegisterUser();
-            MessageBox.Show("Сотрудник создан успешно!");
+        private async void AddEmployeeButton_click(object sender, RoutedEventArgs e)
+        {   
+         await RegisterUser();
+          
         }
 
         private async void LoadData()
@@ -55,24 +58,24 @@ namespace PARK.Pages
                 MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
             }
         }
-
+        private Dictionary<string, int> roleDictionary = new Dictionary<string, int>();
         private async Task FillRoleComboBox(string accessToken)
         {
+       
             try
             {
-                // Получаем роли из API
                 string rolesJson = await GetRoleFromAPI(accessToken);
-
-                // Десериализуем JSON в список объектов Role
                 List<RoleList> roles = JsonConvert.DeserializeObject<List<RoleList>>(rolesJson);
 
-                // Очищаем ComboBox перед добавлением новых элементов
+                // Очистка ComboBoxRoles перед добавлением новых элементов
                 comboBoxRoles.Items.Clear();
+                roleDictionary.Clear(); // Очистка словаря
 
-                // Добавляем роли в ComboBox
+                // Добавление ролей в ComboBoxRoles и их идентификаторов в словарь
                 foreach (var role in roles)
                 {
                     comboBoxRoles.Items.Add(role.Name);
+                    roleDictionary.Add(role.Name, role.Id); // Сохранение идентификатора роли в словаре
                 }
             }
             catch (Exception ex)
@@ -80,7 +83,6 @@ namespace PARK.Pages
                 MessageBox.Show($"Ошибка при заполнении списка ролей: {ex.Message}");
             }
         }
-
         private async Task<string> GetRoleFromAPI(string accessToken)
         {
             string RoleName = string.Empty;
@@ -102,33 +104,39 @@ namespace PARK.Pages
             }
             return RoleName;
         }
-        private async void RegisterUser()
+        private async Task RegisterUser()
         {
-            try
-            {
-                // Получаем выбранную роль из ComboBox
-                string selectedRole = comboBoxRoles.SelectedItem.ToString();
+            if (string.IsNullOrEmpty(logintext.Text) || string.IsNullOrEmpty(passtext.Password) ||
+string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text))
 
-                // Создаем объект пользователя с данными из текстовых полей и выбранной ролью
+            {
+                MessageBox.Show("Пожалуйста, заполните все обязательные поля.");
+                return;
+            }
+                try
+            {
+                // Получение выбранного идентификатора роли из словаря
+                int roleId = roleDictionary[comboBoxRoles.SelectedItem.ToString()];
+                // Создание объекта пользователя с данными из текстовых полей и выбранным идентификатором роли
                 User user = new User
                 {
-                    Login = logintext.Text,
-                    Password = passtext.Password,
-                    Name = nametext.Text,
-                    Surname = surtext.Text,
-                    Patronymic = pattext.Text,
-                    Role = selectedRole // Устанавливаем выбранную роль
+                    login = logintext.Text,
+                    password = passtext.Password,
+                    name = nametext.Text,
+                    surname = surtext.Text,
+                    patronymic = pattext.Text,
+                    role_id = roleId // Отправка идентификатора роли на сервер
                 };
 
-                // Преобразуем объект пользователя в формат JSON
+                // Преобразование объекта пользователя в JSON
                 string userJson = JsonConvert.SerializeObject(user);
 
-                // Создаем HttpClient для отправки запроса
+                // Создание HttpClient для отправки запроса
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/reg", new StringContent(userJson, Encoding.UTF8, "application/json"));
 
-                    // Проверяем успешность запроса
+                    // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Пользователь успешно зарегистрирован!");
@@ -144,6 +152,7 @@ namespace PARK.Pages
             {
                 MessageBox.Show($"Ошибка при регистрации пользователя: {ex.Message}");
             }
+            FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
         }
     }
 }
