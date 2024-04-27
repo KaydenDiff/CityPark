@@ -39,18 +39,14 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-            <TextBlock Padding="0 10 0 10" Foreground="#3AA4A7" FontSize="30" HorizontalAlignment="Center">Самый популярный тариф</TextBlock>
-            <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                    <TextBlock FontSize="20" Padding="0 10 10 10" Width="173" HorizontalAlignment="Left">Название тарифа:</TextBlock>
-                    <TextBlock x:Name="nameTarif" FontSize="20" Padding="0 10 0 10">*****</TextBlock>
+        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Width="800">
+            <TextBlock Padding="0 10 0 20" Foreground="#3AA4A7" FontSize="30" HorizontalAlignment="Center">Самый популярный тариф</TextBlock>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock x:Name="nameTarif" FontSize="16" Width="796" VerticalAlignment="Center" HorizontalAlignment="Center">
+                       *****</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock FontSize="20" Padding="0 0 0 10">Кол-во покупок тарифа за месяц:</TextBlock>
-                    
-                    <TextBlock FontSize="20" Padding="0 0 0 10">*****</TextBlock>
-              
                 </StackPanel>
 
             </StackPanel>

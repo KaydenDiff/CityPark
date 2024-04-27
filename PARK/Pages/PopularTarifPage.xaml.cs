@@ -29,43 +29,47 @@ namespace PARK.Pages
         {
             InitializeComponent();
             mainWindow = main;
+            LoadData();
         }
         private void btnback_Click(object sender, RoutedEventArgs e)
         {
             FrameManager.MainFrame.GoBack();
         }
-        private async Task<string> GetPopularTarif(string accessToken)
+        private async Task<List<string>> GetPopularTarif(string accessToken)
         {
-            string name = string.Empty;
+            List<string> tarifInfo = new List<string>();
 
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/rate");
-                    response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
+                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/popular");
+                    response.EnsureSuccessStatusCode(); // Ensure success status code
 
                     string jsonString = await response.Content.ReadAsStringAsync();
-                    var tarif = JsonConvert.DeserializeObject<Tarif>(jsonString);
-                    name = tarif.Name;
-
+                    tarifInfo = JsonConvert.DeserializeObject<List<string>>(jsonString);
                 }
                 catch (HttpRequestException ex)
                 {
-                    MessageBox.Show($"Ошибка при запросе к API: {ex.Message}");
+                    MessageBox.Show($"Error while requesting API: {ex.Message}");
                 }
             }
-            return name;
+            return tarifInfo;
         }
         private async void LoadData()
         {
             // Получаем данные из API
+            List<string> tarifInfo = await GetPopularTarif(Token.token);
 
-            string name = await GetPopularTarif(Token.token);
+            // Очищаем предыдущий контент
+            nameTarif.Text = string.Empty;
 
-            // Присваиваем данные источником данных для DataGrid
-            nameTarif.Text = name;
+            // Выводим каждую строку информации о тарифе
+            foreach (string info in tarifInfo)
+            {
+                nameTarif.Text += info + "\n"; // Предполагая, что nameTarif - это TextBlock или TextBox
+            }
 
         }
     }
