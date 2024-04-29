@@ -83,5 +83,15 @@ namespace PARK.Pages
         {
             FrameManager.MainFrame.GoBack();
         }
+
+        private void EditSouvenir_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем объект Souvenir, связанный с кнопкой "Изменить"
+            Button button = (Button)sender;
+            Souvenir souvenir = (Souvenir)button.DataContext;
+
+            // Переходим на страницу редактирования сувенира, передавая объект Souvenir
+            FrameManager.MainFrame.Navigate(new EditSouvenirPage(souvenir, mainWindow));
+        }
     }
 }

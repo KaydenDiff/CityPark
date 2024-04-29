@@ -32,7 +32,6 @@ namespace PARK.Pages
             InitializeComponent();
             mainWindow = main;
             LoadData();
-
         }
 
         private void btnback_Click(object sender, RoutedEventArgs e)
@@ -43,14 +42,12 @@ namespace PARK.Pages
         private async void AddEmployeeButton_click(object sender, RoutedEventArgs e)
         {   
          await RegisterUser();
-          
         }
 
         private async void LoadData()
         {
             try
-            {
-                // Получаем роли из API и заполняем ComboBox
+            { // Получаем роли из API и заполняем ComboBox
                 await FillRoleComboBox(Token.token);
             }
             catch (Exception ex)
@@ -58,10 +55,16 @@ namespace PARK.Pages
                 MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
             }
         }
-        private Dictionary<string, int> roleDictionary = new Dictionary<string, int>();
+        private Dictionary<string, int> roleDictionary = new Dictionary<string, int>(); 
+        private Dictionary<string, string> roleTranslations = new Dictionary<string, string>
+{
+    { "admin", "Администратор" },
+    { "manager", "Менеджер" },
+    { "editor", "Редактор" },
+};
+
         private async Task FillRoleComboBox(string accessToken)
         {
-
             try
             {
                 string rolesJson = await GetRoleFromAPI(accessToken);
@@ -76,10 +79,12 @@ namespace PARK.Pages
                 {
                     if (role.Name != "user")
                     {
-                        comboBoxRoles.Items.Add(role.Name);
-                        roleDictionary.Add(role.Name, role.Id); // Сохранение идентификатора роли в словаре
+                        // Получение русского названия роли из словаря
+                        string russianRoleName = roleTranslations.ContainsKey(role.Name) ? roleTranslations[role.Name] : role.Name;
+                        comboBoxRoles.Items.Add(russianRoleName);
+                        roleDictionary.Add(russianRoleName, role.Id); // Сохранение идентификатора роли в словаре
                     }
-                        
+
                 }
             }
             catch (Exception ex)
