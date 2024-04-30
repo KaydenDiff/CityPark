@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -92,6 +93,64 @@ namespace PARK.Pages
 
             // Переходим на страницу редактирования сувенира, передавая объект Souvenir
             FrameManager.MainFrame.Navigate(new EditSouvenirPage(souvenir, mainWindow));
+        }
+        private async Task DeleteSouvenir(int souvenirId, string accessToken)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // Устанавливаем заголовок авторизации
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                    // URL для удаления сувенира с определенным идентификатором
+                    string url = $"http://ladyaev-na.tepk-it.ru/api/deleteSouvenir/{souvenirId}";
+
+                    // Отправляем DELETE запрос для удаления сувенира
+                    HttpResponseMessage response = await client.DeleteAsync(url);
+
+                    // Проверяем успешность запроса
+                    if (response.StatusCode == HttpStatusCode.Gone)
+                    {
+                        MessageBox.Show("Сувенир успешно удален!");
+                        // Дополнительные действия по обновлению пользовательского интерфейса или переходу на другую страницу
+                        FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
+                    }
+                    else
+                    {
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        dynamic errorJson = JsonConvert.DeserializeObject(errorResponse);
+                        string errorMessage = errorJson.message;
+                        MessageBox.Show($"Ошибка при удалении сувенира: {errorMessage}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при отправке запроса: {ex.Message}");
+            }
+        }
+        private async void DeleteSouvenir_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            Souvenir souvenir = (Souvenir)button.DataContext;
+            try
+            {
+                // Получаем идентификатор сувенира для удаления
+                int souvenirId =  souvenir.Id;
+
+                // Получаем токен доступа
+                string accessToken = Token.token;
+
+                // Отправляем запрос на удаление сувенира
+                await DeleteSouvenir(souvenirId, accessToken);
+
+                // После успешного удаления, выполните необходимые действия, например, обновите интерфейс или перейдите на другую страницу
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при удалении сувенира: {ex.Message}");
+            }
         }
     }
 }

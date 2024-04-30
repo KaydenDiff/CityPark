@@ -44,7 +44,7 @@
                 <TextBlock Margin="0 30 0 0" Foreground="#3AA4A7" FontSize="20" HorizontalAlignment="Center" Text="СПИСОК СУВЕНИРОВ" VerticalAlignment="Top"></TextBlock>
             </StackPanel>
 
-            <ListBox Margin="0 30 0 0" Height="300" Width="450" x:Name="souvenirListBox" HorizontalAlignment="Center" Background="#FF3AA4A7">
+            <ListBox Margin="0 30 0 0"  x:Name="souvenirListBox" HorizontalAlignment="Center" Background="#FF3AA4A7" Visibility="Collapsed">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -53,7 +53,7 @@
                             <TextBlock Text="{Binding Price}"  Foreground="White" />
                             <StackPanel Orientation="Horizontal" >
                                 <Button  Content="Изменить" Margin="0 0 10 0" Foreground="White" Width="76" HorizontalAlignment="Left" FontSize="12" Click="EditSouvenir_Click" />
-                                <Button Content="Удалить" Foreground="White" Width="80"  HorizontalAlignment="Left" FontSize="12" ></Button>
+                                <Button Content="Удалить" Foreground="White" Width="80"  HorizontalAlignment="Left" FontSize="12" Click="DeleteSouvenir_Click" ></Button>
                             </StackPanel>
                            
                      

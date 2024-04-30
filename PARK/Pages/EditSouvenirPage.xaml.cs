@@ -69,7 +69,7 @@ namespace PARK.Pages
 
                     // Отправляем POST запрос для обновления сувенира
                     HttpResponseMessage response = await client.PostAsync(url, content);
-                    MessageBox.Show($"Souvenir ID:{updatedData}");
+                    
                     // Проверяем успешность запроса
                     if (response.IsSuccessStatusCode)
                     {
@@ -110,8 +110,7 @@ namespace PARK.Pages
 
                 // Получаем токен доступа
                 string accessToken = Token.token;
-                MessageBox.Show($"Souvenir ID: {souvenirId}, Name: {updatedName}, Description: {updatedDescription}, Price: {updatedPrice}");
-
+           
                 // Отправляем запрос на обновление сувенира
                 await UpdateSouvenir(souvenirId, updatedName, updatedDescription, updatedPrice, accessToken);
             }

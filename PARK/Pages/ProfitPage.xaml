@@ -48,25 +48,20 @@
             <TextBlock Foreground="Black" FontSize="20" HorizontalAlignment="Center">Выберите диапазон для просмотра прибыли</TextBlock>
             <StackPanel Orientation="Horizontal">
                 <StackPanel HorizontalAlignment="Left" Orientation="Vertical" Margin="0 30 0 0">
-                    <xctk:DateTimeUpDown Width="130" x:Name="startDatePicker" Format="Custom"  FormatString="dd-MM-yyyy" Watermark="Start Date" Padding="0 0 15 0" />
-                    <xctk:DateTimeUpDown Width="130" x:Name="endDatePicker" Format="Custom"  FormatString="dd-MM-yyyy" Watermark="End Date" Padding="0 0 15 0" />
+                    <xctk:DateTimeUpDown Width="185" x:Name="startDatePicker" Format="Custom"  FormatString="yyyy-MM-dd HH:mm:ss" Watermark="Start Date" Padding="0 0 15 0" Value="2024-04-29 10:21:09" />
+                    <xctk:DateTimeUpDown Width="185" x:Name="endDatePicker" Format="Custom"  FormatString="yyyy-MM-dd HH:mm:ss" Watermark="End Date" Padding="0 0 15 0" Value="2024-04-29 10:21:19" />
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="20 0 0 0">
-                    <TextBlock FontSize="20" Padding="0 10 10 10">Прибыль:</TextBlock>
-
-                    <TextBlock FontSize="20" Padding="0 0 0 10">Убытки:</TextBlock>
-
+                <StackPanel Margin="20 30 20 20" Orientation="Horizontal">
                     <TextBlock FontSize="20">Доход:</TextBlock>
+                    <TextBlock Margin="20 0 0 0" x:Name="profit" FontSize="20">*****</TextBlock>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock FontSize="20" Padding="0 10 0 10">*****</TextBlock>
-                    <TextBlock FontSize="20" Padding="0 0 0 10">*****</TextBlock>
-                    <TextBlock FontSize="20">*****</TextBlock>
+                   
                 </StackPanel>
-               
+                
             </StackPanel>
-         
-            
+            <Button Margin="0 20 0 0" Content="Узнать доход" Click="Button_Click"/>
+
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" >
             <Button  Margin="0,5,5,0" x:Name="btnback" BorderBrush="{x:Null}" Click="btnback_Click" Background="#00808080" >
