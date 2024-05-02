@@ -9,10 +9,12 @@ namespace PARK
     public class Souvenir
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public double Price { get; set; }
-        public int SouvenirId { get; set; }
-        public string Photo { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public double price { get; set; }
+
+        public int category_souvenir_id { get; set; }
+        public string CategoryName { get; set; } // Имя категории
+        public string photo { get; set; }
     }
 }

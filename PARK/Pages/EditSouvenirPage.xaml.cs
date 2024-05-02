@@ -27,7 +27,7 @@ namespace PARK.Pages
         private Souvenir souvenirInstance { get; set; }
         public MainWindow mainWindow;
         private int souvenir_id { get; set; }
-        public EditSouvenirPage(Souvenir souvenir, MainWindow main)
+        public  EditSouvenirPage(Souvenir souvenir, MainWindow main)
         {
             InitializeComponent();
             mainWindow = main;
@@ -46,9 +46,9 @@ namespace PARK.Pages
                 // Создаем объект JSON только с измененными данными сувенира
                 var updatedData = new
                 {
-                    name = existingSouvenir != null && updatedName != existingSouvenir.Name ? updatedName : existingSouvenir.Name,
-                    description = existingSouvenir != null && updatedDescription != existingSouvenir.Description ? updatedDescription : existingSouvenir.Description,
-                    price = existingSouvenir != null && updatedPrice != existingSouvenir.Price ? updatedPrice : existingSouvenir.Price // используйте текущее значение, если оно не было изменено
+                    name = existingSouvenir != null && updatedName != existingSouvenir.name ? updatedName : existingSouvenir.name,
+                    description = existingSouvenir != null && updatedDescription != existingSouvenir.description ? updatedDescription : existingSouvenir.description,
+                    price = existingSouvenir != null && updatedPrice != existingSouvenir.price ? updatedPrice : existingSouvenir.price // используйте текущее значение, если оно не было изменено
                 };
 
 
@@ -163,9 +163,9 @@ namespace PARK.Pages
             try
             {
                 souvenirInstance = souvenir;
-                NameSouvenir.Text = souvenirInstance.Name;
-                DescriptionSouvenir.Text = souvenirInstance.Description;
-                PriceSouvenir.Text = souvenirInstance.Price.ToString();
+                NameSouvenir.Text = souvenirInstance.name;
+                DescriptionSouvenir.Text = souvenirInstance.description;
+                PriceSouvenir.Text = souvenirInstance.price.ToString();
 
             }
             catch (Exception ex)

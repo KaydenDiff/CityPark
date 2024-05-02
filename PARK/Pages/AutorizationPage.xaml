@@ -45,13 +45,13 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Label FontFamily="Arial" FontSize="12"  Width="57" Content="ЛОГИН:"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBox x:Name="polelogin" Width="150" Height="20" Background="{x:Null}" FontFamily="Arial" FontSize="12" Foreground="Black"  VerticalContentAlignment="Center" BorderThickness="0" BorderBrush="{x:Null}" />
+                    <TextBox x:Name="polelogin" Width="150" Height="20" Background="{x:Null}" FontFamily="Arial" FontSize="12" Foreground="Black"  VerticalContentAlignment="Center" BorderThickness="0" BorderBrush="{x:Null}" Text="WWW"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" Margin="0 20 0 0"  Orientation="Horizontal">
                 <Label  FontFamily="Arial" FontSize="12" Content="ПАРОЛЬ:" Width="63"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <PasswordBox x:Name="polepassword" FontFamily="Arial" FontSize="12" Width="150" Height="19" Background="{x:Null}" Foreground="Black" VerticalContentAlignment="Center" BorderThickness="0" BorderBrush="{x:Null}" />
+                    <PasswordBox x:Name="polepassword" FontFamily="Arial" FontSize="12" Width="150" Height="19" Background="{x:Null}" Foreground="Black" VerticalContentAlignment="Center" BorderThickness="0" BorderBrush="{x:Null}" Password="Zx7+"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">

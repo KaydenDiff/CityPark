@@ -72,7 +72,6 @@ rolesDictionary[u.Role_id]))) : "Unknown"
                 }).ToList();
                     }
 
-
                     else
                     {
                         string responseContent = await response.Content.ReadAsStringAsync();

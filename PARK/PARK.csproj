@@ -76,8 +76,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Category.cs" />
     <Compile Include="Pages\AddEmployeePage.xaml.cs">
       <DependentUpon>AddEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddsouvenirPage.xaml.cs">
+      <DependentUpon>AddsouvenirPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EditSouvenirPage.xaml.cs">
       <DependentUpon>EditSouvenirPage.xaml</DependentUpon>
@@ -117,6 +121,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\AddEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddsouvenirPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

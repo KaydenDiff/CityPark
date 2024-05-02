@@ -49,8 +49,7 @@ namespace PARK.Pages
                     // Загрузка изображений сувениров
                     foreach (var souvenir in data)
                     {
-                      
-                        souvenir.Photo = "http://ladyaev-na.tepk-it.ru/storage/" + souvenir.Photo;// Предположим, что путь к фото хранится без базового URL
+                        souvenir.photo = "http://ladyaev-na.tepk-it.ru/storage/" + souvenir.photo;// Предположим, что путь к фото хранится без базового URL
                     }
                 }
                 catch (Exception ex)
@@ -66,10 +65,20 @@ namespace PARK.Pages
             try
             {
                 // Получаем данные из API
+                List<Category> categories = await GetCategoriesFromApi(Token.token);
                 List<Souvenir> souvenirs = await GetSouvenirsFromApi(Token.token);
-
                 // Присваиваем данные источником данных для ListBox
                 souvenirListBox.ItemsSource = souvenirs;
+
+                // Проходимся по каждому сувениру и присваиваем ему соответствующую категорию по его идентификатору категории
+                foreach (var souvenir in souvenirs)
+                {
+                    Category category = categories.FirstOrDefault(c => c.Id == souvenir.category_souvenir_id);
+                    if (category != null)
+                    {
+                        souvenir.CategoryName = category.Name;
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -151,6 +160,44 @@ namespace PARK.Pages
             {
                 MessageBox.Show($"Ошибка при удалении сувенира: {ex.Message}");
             }
+        }
+
+        private void Description_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем объект Souvenir, связанный с кнопкой "Изменить"
+            Button button = (Button)sender;
+            Souvenir souvenir = (Souvenir)button.DataContext;
+
+            // Выводим описание товара в MessageBox
+            MessageBox.Show($"Описание товара:\n{souvenir.description}");
+        }
+
+        private void AddSouvenir_Click(object sender, RoutedEventArgs e)
+        {
+            FrameManager.MainFrame.Navigate(new AddsouvenirPage(mainWindow));
+        }
+        private async Task<List<Category>> GetCategoriesFromApi(string accessToken)
+        {
+            List<Category> categories = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/showCategorySouvenirs");
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    categories = JsonConvert.DeserializeObject<List<Category>>(responseBody);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при загрузке категорий: {ex.Message}");
+                }
+            }
+
+            return categories;
         }
     }
 }
