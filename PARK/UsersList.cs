@@ -12,12 +12,12 @@ namespace PARK
       
         
             public int id { get; set; }
-            public string Login { get; set; }
-            public string Surname { get; set; }
-            public string Name { get; set; }
-        public string Patronymic { get; set; }
-        public string RoleName { get; set; }
-        public string FullName { get; set; }
+            public string login { get; set; }
+            public string surname { get; set; }
+            public string name { get; set; }
+        public string patronymic { get; set; }
+        public string roleName { get; set; }
+        public string fullName { get; set; }
         public int Role_id { get; set; }
             public DateTime CreatedAt { get; set; }
             public DateTime UpdatedAt { get; set; }

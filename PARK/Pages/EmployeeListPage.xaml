@@ -107,12 +107,16 @@ Background="{TemplateBinding Background}">
                 </DataGrid.Resources>
                 <DataGrid.Columns >
 
-                    <DataGridTextColumn IsReadOnly="True" Header="ФИО Сотрудника" Binding="{Binding FullName}"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Роль сотрудника" Binding="{Binding RoleName}"/>
-
+                    <DataGridTextColumn IsReadOnly="True" Header="ФИО Сотрудника" Binding="{Binding fullName}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Роль сотрудника" Binding="{Binding roleName}"/>
+                  
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Добавить сотрудника" HorizontalAlignment="Center" Click="Button_Click"/>
+     
+                <Button  Margin="0 0 10 0" Content="Добавить сотрудника" HorizontalAlignment="Center" Click="Button_Click"/>
+                
+
+        
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" >
             <Button  Margin="0,5,5,0" x:Name="btnback" BorderBrush="{x:Null}" Click="btnback_Click" Background="#00808080" >

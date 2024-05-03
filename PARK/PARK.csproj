@@ -83,6 +83,7 @@
     <Compile Include="Pages\AddsouvenirPage.xaml.cs">
       <DependentUpon>AddsouvenirPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Cart.cs" />
     <Compile Include="Pages\EditSouvenirPage.xaml.cs">
       <DependentUpon>EditSouvenirPage.xaml</DependentUpon>
     </Compile>

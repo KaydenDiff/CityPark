@@ -63,8 +63,8 @@ namespace PARK.Pages
                         data = users.Where(u => rolesDictionary.ContainsKey(u.Role_id) && rolesDictionary[u.Role_id] != "user")
                     .Select(u => new UsersList
                     {
-                        FullName = $"{u.Surname} {u.Name} {u.Patronymic}",
-                        RoleName = rolesDictionary.ContainsKey(u.Role_id) ?
+                        fullName = $"{u.surname} {u.name} {u.patronymic}",
+                        roleName = rolesDictionary.ContainsKey(u.Role_id) ?
 (rolesDictionary[u.Role_id] == "admin" ? "Администратор" :
 (rolesDictionary[u.Role_id] == "manager" ? "Менеджер" :
 (rolesDictionary[u.Role_id] == "editor" ? "Редактор" :
@@ -112,6 +112,8 @@ rolesDictionary[u.Role_id]))) : "Unknown"
             ListVK.ItemsSource = userData;
 
         }
+
+        
     }
 }
 

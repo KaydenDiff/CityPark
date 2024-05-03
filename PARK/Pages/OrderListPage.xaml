@@ -104,12 +104,13 @@ Background="{TemplateBinding Background}">
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns >
-                    <DataGridTextColumn IsReadOnly="True" Header="№" Binding="{Binding  User.Surname}"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Название товара" Binding="{Binding  Contribution.Name}"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Имя заказчика" Binding="{Binding  Contribution.Name}" Width="95"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Цена товара" Binding="{Binding  Contribution.Name}" Width="80"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Количество" Binding="{Binding InvestmentAmount}" Width="75"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="Номер телефона" Binding="{Binding Status.Name}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="№" Binding="{Binding id}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Название товара" Binding="{Binding SouvenirName}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Имя заказчика" Binding="{Binding FullName }" Width="95"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Цена товара" Binding="{Binding total}" Width="80"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Количество" Binding="{Binding  quantity}" Width="75"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Номер телефона" Binding="{Binding phone}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Итоговая цена" Binding="{Binding TotalPrice}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

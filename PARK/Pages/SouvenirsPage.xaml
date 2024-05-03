@@ -71,8 +71,8 @@
                                         <TextBlock Margin="5 0 0 0" Text="{Binding CategoryName}" Foreground="White" />
                                     </StackPanel>
                                     <Button Content="Описание сувенира" Foreground="White" FontSize="12" Click="Description_Click" Width="150" HorizontalAlignment="Left"/>
-                                    <Button Content="Изменить сувенира" Foreground="White" FontSize="12" Click="EditSouvenir_Click" Width="150" HorizontalAlignment="Left"/>
-                                    <Button Content="Удалить сувенира" Foreground="White" FontSize="12" Click="DeleteSouvenir_Click" Width="150" HorizontalAlignment="Left"/>
+                                    <Button Content="Изменить сувенир" Foreground="White" FontSize="12" Click="EditSouvenir_Click" Width="150" HorizontalAlignment="Left"/>
+                                    <Button Content="Удалить сувенир" Foreground="White" FontSize="12" Click="DeleteSouvenir_Click" Width="150" HorizontalAlignment="Left"/>
                                 </StackPanel>
 
                                 <Border Grid.Column="2" Margin="10 0 0 0" BorderBrush="Gray" BorderThickness="2" CornerRadius="5">
