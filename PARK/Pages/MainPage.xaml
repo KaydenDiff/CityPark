@@ -28,8 +28,16 @@
             </Setter.Value>
         </Setter>
         <Style.Resources>
-
-        </Style.Resources>
+                <Style x:Key="TextAnimationStyle" TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized">
+                            <Setter Property="FontSize" Value="20"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Style.Resources>
+        
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#FF2D7D80"/>
@@ -46,24 +54,25 @@
           
         </StackPanel>
        
-        <StackPanel>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0" >
-                <TextBlock Padding="0 0 3 5">Здраствуйте</TextBlock>
-                <TextBlock x:Name="FN" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
+                <TextBlock Padding="0 0 3 5" FontSize="17">Здраствуйте</TextBlock>
+                <TextBlock x:Name="FN" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
             </StackPanel>
             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Padding="0 0 5 5" HorizontalAlignment="Center" VerticalAlignment="Top" > ваша роль</TextBlock>
-                <TextBlock x:Name="Role" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
+                <TextBlock Padding="0 0 5 5" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" > ваша роль</TextBlock>
+                <TextBlock x:Name="Role" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" >***</TextBlock>
             </StackPanel>
          
         </StackPanel>
-        <StackPanel Margin="0,100,0,0">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" >Предоставленные возможности</TextBlock>
+        <StackPanel Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="17">Предоставленные возможности</TextBlock>
             <Button x:Name="order" Width="170" Margin="0 20 0 0"  FontSize="12" Content="Просмотр заказов" Click="Button_Click" Visibility="Collapsed"></Button>
             <Button x:Name="profit" Width="170" Margin="0 20 0 0"  FontSize="12" Content="Просмотр дохода" Click="Button_Click_1" Visibility="Collapsed"></Button>
             <Button x:Name="tarif" Width="170" Margin="0 20 0 0" FontSize="12" Content="Самый популярный тариф" Click="Button_Click_2" Visibility="Collapsed"></Button>
             <Button x:Name="orders" Width="170" Margin="0 20 0 0" FontSize="12" Content="Список сотрудников" Click="Button_Click_3" Visibility="Collapsed"></Button>
             <Button x:Name="souvenirs" Width="170" Margin="0 20 0 0" FontSize="12" Content="Список сувениров" Click="Button_Click_4" Visibility="Collapsed" ></Button>
         </StackPanel>
+       
     </Grid>
 </Page>

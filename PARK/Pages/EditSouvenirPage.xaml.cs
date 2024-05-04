@@ -87,6 +87,7 @@ namespace PARK.Pages
             {
                 MessageBox.Show($"Ошибка при отправке запроса: {ex.Message}, ");
             }
+            FrameManager.MainFrame.Navigate(new SouvenirsPage(mainWindow));
 
         }
 

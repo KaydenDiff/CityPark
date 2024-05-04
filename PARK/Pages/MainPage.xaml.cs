@@ -184,5 +184,21 @@ namespace PARK.Pages
         {
             FrameManager.MainFrame.Navigate(new SouvenirsPage(mainWindow));
         }
+
+       private void ExpandButton_Click(object sender, RoutedEventArgs e)
+{
+    Window parentWindow = Window.GetWindow(this);
+    if (parentWindow != null)
+    {
+        if (parentWindow.WindowState == WindowState.Normal)
+        {
+            parentWindow.WindowState = WindowState.Maximized;
+        }
+        else
+        {
+            parentWindow.WindowState = WindowState.Normal;
+        }
+    }
+}
     }
 }

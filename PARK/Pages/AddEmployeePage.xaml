@@ -50,6 +50,7 @@
                     <TextBlock Margin="0 15 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ИМЯ:</TextBlock>
                    
                     <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">ОТЧЕСТВО:</TextBlock>
+                    <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">Номер телефона:</TextBlock>
                     <TextBlock Margin="0 20 0 0"  Foreground="Black" FontSize="14" HorizontalAlignment="Center">РОЛЬ:</TextBlock>
                 </StackPanel>
                 <StackPanel>
@@ -59,6 +60,7 @@
                     <TextBox x:Name="nametext" Margin="0 15 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
                     
                     <TextBox x:Name="pattext" Margin="0 17 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
+                    <TextBox x:Name="telephone" Margin="0 17 0 0" Foreground="Black" FontSize="14" HorizontalAlignment="Center" Background="Transparent"  BorderBrush="#3AA4A7" Width="138"></TextBox>
                     <ComboBox x:Name="comboBoxRoles" Margin="0 15 0 0" BorderBrush="#3AA4A7" Width="140"/>
                 </StackPanel>
                 

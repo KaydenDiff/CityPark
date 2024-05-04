@@ -43,13 +43,13 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
             <TextBlock Padding="0 10 0 10" Foreground="#3AA4A7" FontSize="30" HorizontalAlignment="Center">Просмотр дохода</TextBlock>
             <TextBlock Foreground="Black" FontSize="20" HorizontalAlignment="Center">Выберите диапазон для просмотра прибыли</TextBlock>
             <StackPanel Orientation="Horizontal">
                 <StackPanel HorizontalAlignment="Left" Orientation="Vertical" Margin="0 30 0 0">
                     <xctk:DateTimeUpDown Width="185" x:Name="startDatePicker" Format="Custom"  FormatString="yyyy-MM-dd HH:mm:ss" Watermark="Start Date" Padding="0 0 15 0" Value="2024-04-29 10:21:09" />
-                    <xctk:DateTimeUpDown Width="185" x:Name="endDatePicker" Format="Custom"  FormatString="yyyy-MM-dd HH:mm:ss" Watermark="End Date" Padding="0 0 15 0" Value="2024-04-29 10:21:19" />
+                    <xctk:DateTimeUpDown Width="185" x:Name="endDatePicker" Format="Custom"  FormatString="yyyy-MM-dd HH:mm:ss" Watermark="End Date" Padding="0 0 15 0" Value="2024-05-04 11:12:31" />
                 </StackPanel>
                 <StackPanel Margin="20 30 20 20" Orientation="Horizontal">
                     <TextBlock FontSize="20">Доход:</TextBlock>

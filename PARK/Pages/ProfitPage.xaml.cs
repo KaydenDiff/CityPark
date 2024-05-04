@@ -38,7 +38,7 @@ namespace PARK.Pages
         {
             FrameManager.MainFrame.GoBack();
         }
-        private async Task<string> GetIncomeForPeriod(DateTime startDate, DateTime endDate)
+        public async Task<string> GetIncomeForPeriod(DateTime startDate, DateTime endDate)
         {
             string responseData = string.Empty;
 

@@ -26,6 +26,61 @@ namespace PARK.Pages
     /// </summary>
     public partial class AddEmployeePage : Page
     {
+        public string LoginText
+        {
+            get { return logintext.Text; }
+            set { logintext.Text = value; }
+        }
+        public string Password
+        {
+            get { return passtext.Password; }
+            set { passtext.Password = value; }
+        }
+        public string NameText
+        {
+            get { return nametext.Text; }
+            set { nametext.Text = value; }
+        }
+        public string SurnameText
+        {
+            get { return surtext.Text; }
+            set { surtext.Text = value; }
+        }
+
+        // Свойство для доступа к отчеству
+        public string PatronymicText
+        {
+            get { return pattext.Text; }
+            set { pattext.Text = value; }
+        }
+
+        // Свойство для доступа к номеру телефона
+        public string PhoneText
+        {
+            get { return telephone.Text; }
+            set { telephone.Text = value; }
+        }
+        public int SelectedRoleId
+        {
+            get
+            {
+                // Возвращаем идентификатор выбранной роли из словаря по тексту
+                string selectedRoleName = comboBoxRoles.SelectedItem.ToString();
+                return roleDictionary[selectedRoleName];
+            }
+            set
+            {
+                foreach (var pair in roleDictionary)
+                {
+                    if (pair.Value == value)
+                    {
+                        comboBoxRoles.SelectedItem = pair.Key;
+                        break;
+                    }
+                }
+
+            }
+        }
         public MainWindow mainWindow;
         public AddEmployeePage(MainWindow main)
         {
@@ -41,7 +96,7 @@ namespace PARK.Pages
 
         private async void AddEmployeeButton_click(object sender, RoutedEventArgs e)
         {   
-         await RegisterUser();
+         await RegisterUser(Token.token);
         }
 
         private async void LoadData()
@@ -113,19 +168,19 @@ namespace PARK.Pages
             }
             return RoleName;
         }
-        private async Task RegisterUser()
+        public async Task<bool> RegisterUser(string accessToken)
         {
             if (string.IsNullOrEmpty(logintext.Text) || string.IsNullOrEmpty(passtext.Password) ||
-string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text )|| comboBoxRoles.SelectedItem == null)
+                string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text) ||
+                comboBoxRoles.SelectedItem == null)
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.");
-                return;
+                return false;
             }
-                try
+
+            try
             {
-                // Получение выбранного идентификатора роли из словаря
                 int roleId = roleDictionary[comboBoxRoles.SelectedItem.ToString()];
-                // Создание объекта пользователя с данными из текстовых полей и выбранным идентификатором роли
                 User user = new User
                 {
                     login = logintext.Text,
@@ -133,33 +188,35 @@ string.IsNullOrEmpty(nametext.Text) || string.IsNullOrEmpty(surtext.Text )|| com
                     name = nametext.Text,
                     surname = surtext.Text,
                     patronymic = pattext.Text,
-                    role_id = roleId // Отправка идентификатора роли на сервер
+                    phone = telephone.Text,
+                    role_id = roleId
                 };
 
-                // Преобразование объекта пользователя в JSON
                 string userJson = JsonConvert.SerializeObject(user);
 
-                // Создание HttpClient для отправки запроса
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken); // Установка заголовка авторизации
                     HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/reg", new StringContent(userJson, Encoding.UTF8, "application/json"));
 
-                    // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Сотрудник успешно добавлен!");
+                        return true; // Возвращаем true в случае успешного добавления пользователя
                     }
                     else
                     {
                         string errorMessage = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Ошибка при добавлении сотрудника: {errorMessage}");
+                        return false; // Возвращаем false, если произошла ошибка при добавлении пользователя
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при регистрации сотрудника: {ex.Message}");
+                return false; // Возвращаем false в случае возникновения исключения
             }
-            FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
         }
     }
 }

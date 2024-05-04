@@ -40,7 +40,7 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Center">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Foreground="#3AA4A7" FontSize="20" HorizontalAlignment="Center">СПИСОК ЗАКАЗОВ</TextBlock>
             <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Auto" Name="ListVK" AutoGenerateColumns="False" SelectionMode="Single" Tag="UserBindingSource" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" Grid.Column="0" Margin="0 30 0 60" HorizontalAlignment="Center" MinHeight="100" Background="#FF3AA4A7" Height="62" Width="600" >
                 <DataGrid.Resources>

@@ -39,7 +39,7 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Width="800">
+        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Width="800" VerticalAlignment="Center">
             <TextBlock Padding="0 10 0 20" Foreground="#3AA4A7" FontSize="30" HorizontalAlignment="Center">Самый популярный тариф</TextBlock>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

@@ -41,7 +41,7 @@
     <Grid>
         <!-- Заголовок страницы -->
         
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Margin="0 25 0 0" Foreground="#3AA4A7" FontSize="20" HorizontalAlignment="Center" Text="СПИСОК СУВЕНИРОВ" VerticalAlignment="Top"/>
             <!-- ListBox со ScrollViewer -->
         <ScrollViewer Margin="0 5 0 0" VerticalScrollBarVisibility="Auto">
