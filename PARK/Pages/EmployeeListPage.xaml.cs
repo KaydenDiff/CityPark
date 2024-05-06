@@ -100,6 +100,7 @@ rolesDictionary[u.Role_id]))) : "Unknown"
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            var tokenProvider = new TokenProvider();
             FrameManager.MainFrame.Navigate(new AddEmployeePage(mainWindow));
         }
         private async void LoadData()

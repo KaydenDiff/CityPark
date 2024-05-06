@@ -12,10 +12,17 @@ using System.Windows.Media.Imaging;
 
 namespace PARK.Pages
 {
+   
     public partial class AddsouvenirPage : Page
     {
+        public TextBox nameSouvenir { get; private set; }
+        public TextBox descriptionSouvenir { get; private set; }
+        public TextBox priceSouvenir { get; private set; }
+        public ComboBox ComboBoxCategory { get; private set; }
+
+
         public MainWindow mainWindow;
-        private string base64Image; // Переменная для хранения base64 представления изображения
+        public string base64Image; // Переменная для хранения base64 представления изображения
 
         public AddsouvenirPage(MainWindow main)
         {
@@ -28,7 +35,8 @@ namespace PARK.Pages
         {
             // Добавьте await перед вызовом метода AddSouvenir
             await AddSouvenir(Token.token);
-         
+            FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
+
         }
 
         private async void LoadData()
@@ -52,7 +60,7 @@ namespace PARK.Pages
         private Dictionary<string, int> categoryDictionary = new Dictionary<string, int>();
         private Dictionary<string, string> categoryTranslations = new Dictionary<string, string>();
 
-        private async Task FillRoleComboBox(string accessToken)
+        public async Task FillRoleComboBox(string accessToken)
         {
             try
             {
@@ -79,7 +87,7 @@ namespace PARK.Pages
             }
         }
 
-        private async Task AddSouvenir(string accessToken)
+        public async Task AddSouvenir(string accessToken)
         {
             if (string.IsNullOrEmpty(NameSouvenir.Text) || string.IsNullOrEmpty(DescriptionSouvenir.Text) ||
                 string.IsNullOrEmpty(PriceSouvenir.Text) || comboBoxCategory.SelectedItem == null || string.IsNullOrEmpty(base64Image))
@@ -127,17 +135,18 @@ namespace PARK.Pages
                                 string errorMessage = await response.Content.ReadAsStringAsync();
                                 MessageBox.Show($"Ошибка при добавлении сувенира: {errorMessage}");
                             }
-                            
+                      
                         }
                     }
                 }
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при добавлении сувенира: {ex.Message}");
               
             }
-            FrameManager.MainFrame.Navigate(new MainPage(mainWindow));
+           
         }
 
         private async Task<List<Category>> GetCategoriesFromApi(string accessToken)

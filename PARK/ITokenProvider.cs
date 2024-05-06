@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PARK
 {
-    public class Token
+    public interface ITokenProvider
     {
-        public static string token;
+        string GetToken();
     }
 }
