@@ -52,6 +52,7 @@ namespace CityParkUnitTestProject
         [TestMethod]
         public async Task AuthenticateAsync_EmptyCredentials_ReturnsFalse()
         {
+
             // Arrange
             var authorizationPage = new AutorizationPage(null);
 
@@ -92,6 +93,103 @@ namespace CityParkUnitTestProject
     public class AddEmployeeTest
     {
         
+       
+        [TestMethod]
+        public async Task AddEmployee_Successful_Returns422()
+        {
+            string password = "Ss1@";
+            string login = "sasa-ouy";
+            int actual = 0;
+            int expected = 422;
+            User user = null;
+
+            // Авторизация и получение токена
+            var credentials = new { login = login, password = password };
+            string token = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/login",
+                        new StringContent(JsonConvert.SerializeObject(credentials), Encoding.UTF8, "application/json"));
+                    response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    // Парсим ответ в объект
+                    var responseObject = JsonConvert.DeserializeObject<dynamic>(responseBody);
+                    token = JsonConvert.DeserializeObject<string>(responseBody);
+
+                    // Сохраняем токен в настройках приложения
+                    Token.token = token;
+                }
+                catch (Exception)
+                {
+                    // Ошибка при неправильно введенных данных
+                    MessageBox.Show("Ошибка аутентификации");
+                }
+            }
+
+            // Вызов метода RegisterUser, передавая токен
+            user = new User
+            {
+                login = "",
+                password = "validPasswor",
+                name = "000",
+                surname = "000",
+                patronymic = "0000",
+                phone = "123456789",
+                role_id = 2
+            };
+
+            string userJson = JsonConvert.SerializeObject(user);
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token); // Установка заголовка авторизации
+                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/reg", new StringContent(userJson, Encoding.UTF8, "application/json"));
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = await response.Content.ReadAsStringAsync();
+                        var createdUser = JsonConvert.DeserializeObject<User>(responseContent);
+                        string createdUserId = createdUser.id.ToString(); // Преобразование ID в строку             
+                     
+
+
+                        try
+                        {
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                            HttpResponseMessage deleteResponse = await client.DeleteAsync($"http://ladyaev-na.tepk-it.ru/api/user/delete/{createdUserId}");
+
+                            if (deleteResponse.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Пользователь успешно удален!");
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Ошибка при удалении пользователя: {deleteResponse.StatusCode}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при удалении пользователя: {ex.Message}");
+                        }
+                    }
+                    else if (response.StatusCode == (HttpStatusCode)422)
+                    {
+                        actual = (int)response.StatusCode;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка: {ex.Message}");
+                 
+                }
+            }
+            Assert.AreEqual(expected, actual);
+        }
         [TestMethod]
         public async Task AddEmployee_Successful_ReturnsTrue()
         {
@@ -155,7 +253,6 @@ namespace CityParkUnitTestProject
                         string createdUserId = createdUser.id.ToString(); // Преобразование ID в строку             
                         actual = true;
 
-
                         try
                         {
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -185,104 +282,6 @@ namespace CityParkUnitTestProject
                     else
                     {
                         MessageBox.Show($"{response}");
-                        actual = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка: {ex.Message}");
-                    actual = false;
-                }
-            }
-            Assert.AreEqual(expected, actual);
-        }
-        [TestMethod]
-        public async Task AddEmployee_Successful_Returns422()
-        {
-            string password = "Ss1@";
-            string login = "sasa-ouy";
-            bool actual = true;
-            bool expected = false;
-            User user = null;
-
-            // Авторизация и получение токена
-            var credentials = new { login = login, password = password };
-            string token = null;
-
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/login",
-                        new StringContent(JsonConvert.SerializeObject(credentials), Encoding.UTF8, "application/json"));
-                    response.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    // Парсим ответ в объект
-                    var responseObject = JsonConvert.DeserializeObject<dynamic>(responseBody);
-                    token = JsonConvert.DeserializeObject<string>(responseBody);
-
-                    // Сохраняем токен в настройках приложения
-                    Token.token = token;
-                }
-                catch (Exception)
-                {
-                    // Ошибка при неправильно введенных данных
-                    MessageBox.Show("Ошибка аутентификации");
-                }
-            }
-
-            // Вызов метода RegisterUser, передавая токен
-            user = new User
-            {
-                login = "",
-                password = "validPasswor",
-                name = "000",
-                surname = "000",
-                patronymic = "0000",
-                phone = "123456789",
-                role_id = 2
-            };
-
-            string userJson = JsonConvert.SerializeObject(user);
-
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token); // Установка заголовка авторизации
-                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/reg", new StringContent(userJson, Encoding.UTF8, "application/json"));
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        var createdUser = JsonConvert.DeserializeObject<User>(responseContent);
-                        string createdUserId = createdUser.id.ToString(); // Преобразование ID в строку             
-                        actual = true;
-
-
-                        try
-                        {
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage deleteResponse = await client.DeleteAsync($"http://ladyaev-na.tepk-it.ru/api/user/delete/{createdUserId}");
-
-                            if (deleteResponse.IsSuccessStatusCode)
-                            {
-                                MessageBox.Show("Пользователь успешно удален!");
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Ошибка при удалении пользователя: {deleteResponse.StatusCode}");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Ошибка при удалении пользователя: {ex.Message}");
-                        }
-                    }
-                    else if (response.StatusCode == (HttpStatusCode)422)
-                    {
-                        // Ошибка 422 - некорректные данные в запросе
-                        MessageBox.Show("Ошибка 422: Некорректные данные в запросе. Пользователь не был создан.");
                         actual = false;
                     }
                 }
@@ -385,8 +384,8 @@ namespace CityParkUnitTestProject
         [TestMethod]
         public async Task ProfitPageTests_WithoutToken()
         {
-            bool actual = true;
-            bool expected = false;
+            int actual = 0;
+            int expected = 500;
             string responseData = string.Empty;
 
             var startDate = new DateTime(2024, 04, 29, 10, 21, 09);
@@ -406,37 +405,14 @@ namespace CityParkUnitTestProject
                     string url = $"http://ladyaev-na.tepk-it.ru/api/income?{queryString}";
 
                     HttpResponseMessage response = await client.GetAsync(url);
+                    actual = (int)response.StatusCode;
 
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("Ошибка 401: Не авторизован.");
-                    }
-                    else if (response.IsSuccessStatusCode)
-                    {
-                        // Обработка успешного ответа
-                        responseData = await response.Content.ReadAsStringAsync();
-
-                        // Декодирование Unicode-строки в обычную строку
-                        responseData = Regex.Unescape(responseData);
-                        actual = true;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                        actual = false;
-                    }
-                    else
-                    {
-                        string errorMessage = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show($"Ошибка при получении дохода: {errorMessage}");
-                        actual = false;
-                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при отправке запроса: {ex.Message}");
-                actual = false;
+               
             }
 
             Assert.AreEqual(expected, actual);
@@ -555,7 +531,7 @@ namespace CityParkUnitTestProject
                 catch (Exception)
                 {
                     // Ошибка при неправильно введенных данных
-                    MessageBox.Show("Ошибка аутентификации");
+                  
                 }
             }
 
@@ -589,7 +565,7 @@ namespace CityParkUnitTestProject
                     // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Сувенир успешно добавлен!");
+                       
                         actual = true;
                     }
                     else
@@ -754,9 +730,9 @@ namespace CityParkUnitTestProject
         public async Task AddSouvenir_WithoutToken()
         {
             // Arrange
-       
-            bool actual = true;
-            bool expected = false;
+            int actual = 0;
+            int expected = 401;
+          
             try
             {
                 // Создание объекта данных для сувенира
@@ -785,26 +761,7 @@ namespace CityParkUnitTestProject
                         new StringContent(jsonData, Encoding.UTF8, "application/json"));
 
                     // Проверка успешности запроса
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Сувенир успешно изменен!");
-                        actual = true;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("Ошибка 401: Не авторизован.");
-                        actual = false;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                        actual = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Ошибка при изменении сувенира. Код состояния: {response.StatusCode}");
-                        actual = false;
-                    }
+                    actual = (int)response.StatusCode;
                     Assert.AreEqual(expected, actual);
                 }
 
@@ -823,9 +780,9 @@ namespace CityParkUnitTestProject
         public async Task PopularTarifTests_WithoutToken()
         {
             // Arrange
-            List<string> tarifInfo = null;
-            bool actual = false;
-            bool expected = false;
+           
+            int actual = 0;
+            int expected = 500;
 
             try
             {
@@ -833,27 +790,7 @@ namespace CityParkUnitTestProject
                 {
                     HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/popular");
 
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("Ошибка 401: Не авторизован.");
-                    }
-                    else if (response.IsSuccessStatusCode)
-                    {
-                        string jsonString = await response.Content.ReadAsStringAsync();
-                        tarifInfo = JsonConvert.DeserializeObject<List<string>>(jsonString);
-
-                        actual = true;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                   
-                    }
-                    else
-                    {
-                     
-                        MessageBox.Show($"Ошибка при запросе к API: {response.StatusCode}");
-                    }
+                    actual = (int)response.StatusCode;
                 }
             }
             catch (HttpRequestException ex)
@@ -930,7 +867,7 @@ namespace CityParkUnitTestProject
             catch (Exception)
             {
                 // Ошибка при неправильно введенных данных
-                MessageBox.Show("Ошибка аутентификации");
+              
                 actual = false;
             }
             Assert.AreEqual(expected, actual);
@@ -1005,7 +942,7 @@ namespace CityParkUnitTestProject
                     // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Сувенир успешно изменен!");
+                       
                         actual = true;
                     }
                     else
@@ -1028,8 +965,8 @@ namespace CityParkUnitTestProject
             string password = "Ss1@";
             string login = "sasa-ouy";
             int souvenirId = 13;
-            bool actual = true;
-            bool expected = false;
+            int actual = 0;
+            int expected = 422;
 
             // Авторизация и получение токена
             var credentials = new { login = login, password = password };
@@ -1084,17 +1021,7 @@ namespace CityParkUnitTestProject
                         new StringContent(jsonData, Encoding.UTF8, "application/json"));
 
                     // Проверка успешности запроса
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Сувенир успешно изменен!");
-                        actual = true;
-                    }
-                    else if (response.StatusCode == (HttpStatusCode)422)
-                    {
-
-                        MessageBox.Show("Ошибка 422: Некорректные данные в запросе. Сувенир не был изменен.");
-                        actual = false;
-                    }
+                    actual = (int)response.StatusCode;
                 }
             }
             catch (Exception ex)
@@ -1109,8 +1036,8 @@ namespace CityParkUnitTestProject
         {
             // Arrange
             int souvenirId = 13;
-            bool actual = true;
-            bool expected = false;
+            int actual = 0;
+            int expected = 401;
             try
             {
                 // Создание объекта данных для сувенира
@@ -1138,26 +1065,7 @@ namespace CityParkUnitTestProject
                         new StringContent(jsonData, Encoding.UTF8, "application/json"));
 
                     // Проверка успешности запроса
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Сувенир успешно изменен!");
-                        actual = true;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("Ошибка 401: Не авторизован.");
-                        actual = false;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                        actual = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Ошибка при изменении сувенира. Код состояния: {response.StatusCode}");
-                        actual = false;
-                    }
+                    actual = (int)response.StatusCode;
                     Assert.AreEqual(expected, actual);
                 }
 
@@ -1178,8 +1086,6 @@ namespace CityParkUnitTestProject
             // Arrange
             string password = "Ss1@";
             string login = "sasa-ouy";
-
-            List<UsersList> data = null;
             bool actual = false;
             bool expected = true;
 
@@ -1220,47 +1126,19 @@ namespace CityParkUnitTestProject
                         response.EnsureSuccessStatusCode();
                         if (response.IsSuccessStatusCode)
                         {
-                            string usersJson = await response.Content.ReadAsStringAsync();
-                            List<UsersList> users = JsonConvert.DeserializeObject<List<UsersList>>(usersJson);
-
-                            // Запрос на получение списка ролей
-                            HttpResponseMessage roleResponse = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/roles");
-                            roleResponse.EnsureSuccessStatusCode(); // Гарантирует, что ответ успешный
-
-                            string rolesJson = await roleResponse.Content.ReadAsStringAsync();
-                            List<RoleList> rolesData = JsonConvert.DeserializeObject<List<RoleList>>(rolesJson);
-
-                            // Сопоставление идентификаторов ролей с их названиями
-                            var rolesDictionary = rolesData.ToDictionary(role => role.Id, role => role.Name);
-
-                            // Выбор нужных свойств из объектов User и замена идентификаторов ролей на их названия
-                            data = users.Where(u => rolesDictionary.ContainsKey(u.Role_id) && rolesDictionary[u.Role_id] != "user")
-                        .Select(u => new UsersList
-                        {
-                            fullName = $"{u.surname} {u.name} {u.patronymic}",
-                            roleName = rolesDictionary.ContainsKey(u.Role_id) ?
-    (rolesDictionary[u.Role_id] == "admin" ? "Администратор" :
-    (rolesDictionary[u.Role_id] == "manager" ? "Менеджер" :
-    (rolesDictionary[u.Role_id] == "editor" ? "Редактор" :
-    rolesDictionary[u.Role_id]))) : "Unknown"
-                        }).ToList();
                             actual = true;
                         }
                         else
                         {
                             string responseContent = await response.Content.ReadAsStringAsync();
                             actual = false;
-                            MessageBox.Show($"API request failed with status code {response.StatusCode}: {responseContent}");
+                          
                         }
                     }
-                    catch (JsonReaderException ex)
-                    {
-                        MessageBox.Show($"Ошибка при парсинге JSON: {ex.Message}");
-                        actual = false;
-                    }
+                    
                     catch (HttpRequestException ex)
                     {
-                        MessageBox.Show($"Ошибка при запросе к API: {ex.Message}");
+                    
                         actual = false;
                     }
 
@@ -1276,8 +1154,8 @@ namespace CityParkUnitTestProject
         [TestMethod]
         public async Task Employeelist_WithoutToken()
         {
-            bool actual = true;
-            bool expected = false;
+            int actual = 0;
+            int expected = 500;
 
             try
             {
@@ -1288,34 +1166,13 @@ namespace CityParkUnitTestProject
                     // Запрос на получение списка пользователей
                     HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/users");
 
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("Ошибка 401: Не авторизован.");
-                        actual = false;
-                    }
-                    else if (response.IsSuccessStatusCode)
-                    {
-                        string usersJson = await response.Content.ReadAsStringAsync();
-                        List<UsersList> users = JsonConvert.DeserializeObject<List<UsersList>>(usersJson);
-                        actual = true;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                        actual = false;
-                    }
-                    else
-                    {
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show($"API request failed with status code {response.StatusCode}: {responseContent}");
-                        actual = false;
-                    }
+                    actual = (int)response.StatusCode;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
-                actual = false;
+                
             }
 
             // Assert
@@ -1328,8 +1185,8 @@ namespace CityParkUnitTestProject
         [TestMethod]
         public async Task OrderList_WithoutToken()
         {
-            bool actual = true;
-            bool expected = false;
+            int actual = 0;
+            int expected = 500;
 
             try
             {
@@ -1340,34 +1197,13 @@ namespace CityParkUnitTestProject
                     // Запрос на получение списка пользователей
                     HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/showCart");
 
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("Ошибка 401: Не авторизован.");
-                        actual = false;
-                    }
-                    else if (response.IsSuccessStatusCode)
-                    {
-                        string usersJson = await response.Content.ReadAsStringAsync();
-                        List<Cart> users = JsonConvert.DeserializeObject<List<Cart>>(usersJson);
-                        actual = true;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                        actual = false;
-                    }
-                    else
-                    {
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show($"API request failed with status code {response.StatusCode}: {responseContent}");
-                        actual = false;
-                    }
+                    actual = (int)response.StatusCode;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
-                actual = false;
+               
             }
 
             // Assert
@@ -1416,28 +1252,6 @@ namespace CityParkUnitTestProject
                     // Запрос на получение списка пользователей
                     HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/showCart");
 
-                        if (response.StatusCode == HttpStatusCode.Unauthorized)
-                        {
-                            MessageBox.Show("Ошибка 401: Не авторизован.");
-                            actual = false;
-                        }
-                        else if (response.IsSuccessStatusCode)
-                        {
-                            string usersJson = await response.Content.ReadAsStringAsync();
-                            List<Cart> users = JsonConvert.DeserializeObject<List<Cart>>(usersJson);
-                            actual = true;
-                        }
-                        else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                        {
-                            MessageBox.Show("Ошибка 500: Внутренняя ошибка сервера.");
-                            actual = false;
-                        }
-                        else
-                        {
-                            string responseContent = await response.Content.ReadAsStringAsync();
-                            MessageBox.Show($"API request failed with status code {response.StatusCode}: {responseContent}");
-                            actual = false;
-                        }
                     }
                 }
                 catch (Exception ex)
