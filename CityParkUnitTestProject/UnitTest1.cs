@@ -92,8 +92,8 @@ namespace CityParkUnitTestProject
     [TestClass]
     public class AddEmployeeTest
     {
-        
-       
+
+
         [TestMethod]
         public async Task AddEmployee_Successful_Returns422()
         {
@@ -155,7 +155,7 @@ namespace CityParkUnitTestProject
                         string responseContent = await response.Content.ReadAsStringAsync();
                         var createdUser = JsonConvert.DeserializeObject<User>(responseContent);
                         string createdUserId = createdUser.id.ToString(); // Преобразование ID в строку             
-                     
+
 
 
                         try
@@ -185,7 +185,7 @@ namespace CityParkUnitTestProject
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка: {ex.Message}");
-                 
+
                 }
             }
             Assert.AreEqual(expected, actual);
@@ -253,31 +253,6 @@ namespace CityParkUnitTestProject
                         string createdUserId = createdUser.id.ToString(); // Преобразование ID в строку             
                         actual = true;
 
-                        try
-                        {
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage deleteResponse = await client.DeleteAsync($"http://ladyaev-na.tepk-it.ru/api/user/delete/{createdUserId}");
-
-                            if (deleteResponse.StatusCode == HttpStatusCode.Gone)
-                            {
-                                MessageBox.Show("Пользователь успешно удален!");
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Ошибка при удалении пользователя: {deleteResponse.StatusCode}");
-                            }
-                        }
-                        catch (WebException ex)
-                        {
-                            if (ex.Response is HttpWebResponse webResponse && webResponse.StatusCode == HttpStatusCode.Gone)
-                            {
-                                MessageBox.Show("Ошибка 410: Ресурс удален. Пользователь не найден.");
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Ошибка при удалении пользователя: {ex.Message}");
-                            }
-                        }
                     }
                     else
                     {
@@ -412,7 +387,7 @@ namespace CityParkUnitTestProject
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при отправке запроса: {ex.Message}");
-               
+
             }
 
             Assert.AreEqual(expected, actual);
@@ -531,7 +506,7 @@ namespace CityParkUnitTestProject
                 catch (Exception)
                 {
                     // Ошибка при неправильно введенных данных
-                  
+
                 }
             }
 
@@ -565,7 +540,7 @@ namespace CityParkUnitTestProject
                     // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
-                       
+
                         actual = true;
                     }
                     else
@@ -725,14 +700,14 @@ namespace CityParkUnitTestProject
 
             Assert.AreEqual(expected, actual);
         }
-      
+
         [TestMethod]
         public async Task AddSouvenir_WithoutToken()
         {
             // Arrange
             int actual = 0;
             int expected = 401;
-          
+
             try
             {
                 // Создание объекта данных для сувенира
@@ -780,7 +755,7 @@ namespace CityParkUnitTestProject
         public async Task PopularTarifTests_WithoutToken()
         {
             // Arrange
-           
+
             int actual = 0;
             int expected = 500;
 
@@ -796,12 +771,12 @@ namespace CityParkUnitTestProject
             catch (HttpRequestException ex)
             {
                 MessageBox.Show($"Ошибка при запросе к API: {ex.Message}");
-              
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
-               
+
             }
 
             Assert.AreEqual(expected, actual);
@@ -867,7 +842,7 @@ namespace CityParkUnitTestProject
             catch (Exception)
             {
                 // Ошибка при неправильно введенных данных
-              
+
                 actual = false;
             }
             Assert.AreEqual(expected, actual);
@@ -942,7 +917,7 @@ namespace CityParkUnitTestProject
                     // Проверка успешности запроса
                     if (response.IsSuccessStatusCode)
                     {
-                       
+
                         actual = true;
                     }
                     else
@@ -1075,7 +1050,7 @@ namespace CityParkUnitTestProject
                 Console.WriteLine($"Ошибка: {ex.Message}");
             }
         }
-      
+
     }
     [TestClass]
     public class Employeelist
@@ -1132,13 +1107,13 @@ namespace CityParkUnitTestProject
                         {
                             string responseContent = await response.Content.ReadAsStringAsync();
                             actual = false;
-                          
+
                         }
                     }
-                    
+
                     catch (HttpRequestException ex)
                     {
-                    
+
                         actual = false;
                     }
 
@@ -1172,7 +1147,7 @@ namespace CityParkUnitTestProject
             catch (Exception ex)
             {
                 MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
-                
+
             }
 
             // Assert
@@ -1203,22 +1178,22 @@ namespace CityParkUnitTestProject
             catch (Exception ex)
             {
                 MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
-               
+
             }
 
             // Assert
             Assert.AreEqual(expected, actual);
         }
-       
-            [TestMethod]
-            public async Task OrderList_WithToken()
-            {
+
+        [TestMethod]
+        public async Task OrderList_WithToken()
+        {
             // Arrange
             string password = "Ss1@";
             string login = "sasa-ouy";
 
             bool actual = true;
-                bool expected = true;
+            bool expected = true;
             var credentials = new { login = login, password = password };
             string token = null;
 
@@ -1244,25 +1219,157 @@ namespace CityParkUnitTestProject
                 }
             }
             try
+            {
+                using (HttpClient client = new HttpClient())
                 {
-                    using (HttpClient client = new HttpClient())
-                    {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                     // Запрос на получение списка пользователей
                     HttpResponseMessage response = await client.GetAsync("http://ladyaev-na.tepk-it.ru/api/showCart");
 
-                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
-                    actual = false;
-                }
-
-                // Assert
-                Assert.AreEqual(expected, actual);
             }
-        }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Непредвиденная ошибка: {ex.Message}");
+                actual = false;
+            }
 
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+    }
+    [TestClass]
+    public class Delete
+    {
+        [TestMethod]
+        public async Task DeleteSouvenir_Successful_ReturnsTrue()
+        {
+            // Arrange
+            string password = "Ss1@";
+            string login = "sasa-ouy";
+            int actual = 0;
+            int expected = 410;
+
+            // Authenticate user and get token
+            var credentials = new { login = login, password = password };
+            string token = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/login",
+                        new StringContent(JsonConvert.SerializeObject(credentials), Encoding.UTF8, "application/json"));
+                    response.EnsureSuccessStatusCode(); // Ensure response is successful
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    // Parse response into object
+                    var responseObject = JsonConvert.DeserializeObject<dynamic>(responseBody);
+                    token = JsonConvert.DeserializeObject<string>(responseBody); // Assuming token is available here
+
+                    // Save token in application settings
+                    Token.token = token;
+                }
+                catch (HttpRequestException ex)
+                {
+                    // Authentication error
+                    Assert.Fail($"Failed to authenticate: {ex.Message}");
+                }
+            }
+
+            try
+            {
+                // Perform operation to add a souvenir
+                // Here you need to add code to add a souvenir before attempting to delete it
+                // This depends on your application logic and how souvenirs are added
+
+                // After adding a souvenir successfully, you can proceed with deletion
+                int souvenirId = 19;
+
+                using (HttpClient client = new HttpClient())
+                {
+                    // Add token to request header
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    // Send request to delete souvenir
+                    HttpResponseMessage response = await client.DeleteAsync($"http://ladyaev-na.tepk-it.ru/api/deleteSouvenir/{souvenirId}");
+                    actual = (int)response.StatusCode;
+                }
+
+            }
+           
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public async Task DeleteEmployee_Successful_ReturnsTrue()
+        {
+            // Arrange
+            string password = "Ss1@";
+            string login = "sasa-ouy";
+            int actual = 0;
+            int expected = 410;
+
+            // Authenticate user and get token
+            var credentials = new { login = login, password = password };
+            string token = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync("http://ladyaev-na.tepk-it.ru/api/login",
+                        new StringContent(JsonConvert.SerializeObject(credentials), Encoding.UTF8, "application/json"));
+                    response.EnsureSuccessStatusCode(); // Ensure response is successful
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    // Parse response into object
+                    var responseObject = JsonConvert.DeserializeObject<dynamic>(responseBody);
+                    token = JsonConvert.DeserializeObject<string>(responseBody); // Assuming token is available here
+
+                    // Save token in application settings
+                    Token.token = token;
+                }
+                catch (HttpRequestException ex)
+                {
+                    // Authentication error
+                    Assert.Fail($"Failed to authenticate: {ex.Message}");
+                }
+            }
+
+            try
+            {
+                // Perform operation to add a souvenir
+                // Here you need to add code to add a souvenir before attempting to delete it
+                // This depends on your application logic and how souvenirs are added
+
+                // After adding a souvenir successfully, you can proceed with deletion
+                int userId = 43;
+
+                using (HttpClient client = new HttpClient())
+                {
+                    // Add token to request header
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    // Send request to delete souvenir
+                    HttpResponseMessage response = await client.DeleteAsync($"http://ladyaev-na.tepk-it.ru/api/user/delete/{userId}");
+                    actual = (int)response.StatusCode;
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            Assert.AreEqual(expected, actual);
+        }
+    
+    }
 }
