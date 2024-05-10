@@ -30,7 +30,7 @@ namespace PARK.Pages
             {
                 InitializeComponent();
                 mainWindow = main;
-               
+                polelogin.Focus();
             }
 
             // Метод для выполнения процесса аутентификации
@@ -97,7 +97,7 @@ namespace PARK.Pages
             }
             }
 
-       
+        
     } 
 
     }
