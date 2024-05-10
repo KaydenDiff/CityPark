@@ -91,6 +91,7 @@
     </ApplicationDefinition>
     <Compile Include="Category.cs" />
     <Compile Include="ITokenProvider.cs" />
+    <Compile Include="logo\data.cs" />
     <Compile Include="Pages\AddEmployeePage.xaml.cs">
       <DependentUpon>AddEmployeePage.xaml</DependentUpon>
     </Compile>
@@ -212,6 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo\272088.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
