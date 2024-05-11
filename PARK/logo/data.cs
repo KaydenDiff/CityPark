@@ -10,5 +10,7 @@ namespace PARK.logo
     {
         //login:sasa-ouy
         //password:Ss1@
+        //password admin:Qq1@
+        //login admin:ladyaev-naz
     }
 }
